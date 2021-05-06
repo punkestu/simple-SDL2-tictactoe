@@ -5,20 +5,19 @@ struct vect2d{
       int x ,y;
 };
 
-void layout(SDL_Renderer* renderer, int width, int height){
-      int base = width <= height?width:height;
-      for(uint i = 0; i < 3; i++){
-            for(uint j = 0; j < 3; j++){
-                  SDL_Rect tile = {base/3*j,base/3*i,base/3,base/3};
+void layout(SDL_Renderer* renderer){
+      for(int i = 0; i < 3; i++){
+            for(int j = 0; j < 3; j++){
+                  SDL_Rect tile = {200*j,200*i,200,200};
                   SDL_SetRenderDrawColor(renderer, 255,255,255,255);
                   SDL_RenderFillRect(renderer, &tile);
                   SDL_SetRenderDrawColor(renderer, 0,0,0,255);
                   if(j!=0){
-                        SDL_RenderDrawLine(renderer, base/3*j,0,base/3*j,base);
+                        SDL_RenderDrawLine(renderer, 200*j,0,200*j,600);
                   }
             }
             if(i!=0){
-                  SDL_RenderDrawLine(renderer, 0,base/3*i,base,base/3*i);
+                  SDL_RenderDrawLine(renderer, 0,200*i,600,200*i);
             }
       }
 }
@@ -55,8 +54,8 @@ bool mark(vect2d pos, int *tile, bool turn){
 }
 
 void drawMark(SDL_Renderer *renderer, int *tile){
-      for(uint i = 0; i < 3; i++){
-            for(uint j = 0; j < 3; j++){
+      for(int i = 0; i < 3; i++){
+            for(int j = 0; j < 3; j++){
                   SDL_SetRenderDrawColor(renderer, 0,0,0,255);
                   if(tile[i*3+j]==1){
                         //SDL_Log("have mark");
@@ -139,7 +138,7 @@ int main(int argc, char* argv[]){
             SDL_SetRenderDrawColor(renderer, 0,0,0,255);
             SDL_RenderClear(renderer);
 
-            layout(renderer, 600,600);
+            layout(renderer);
             drawMark(renderer, tile);
 
             SDL_RenderPresent(renderer);
